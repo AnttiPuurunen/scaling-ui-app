@@ -8,7 +8,7 @@ export default function Component(props) {
     return (
         <>
             <div id="mainComponent">
-                <p1>{name}</p1>
+                {name}
             </div>
         </>
     );

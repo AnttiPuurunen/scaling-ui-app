@@ -9,7 +9,7 @@ export default function MainTemplate() {
                 <div id="header">
                     <h1>Tervetulloo!</h1>
                 </div>
-
+                {/* Outlet is where the content is rendered */}
                 <div id="main">
                     <Outlet />
                 </div>
