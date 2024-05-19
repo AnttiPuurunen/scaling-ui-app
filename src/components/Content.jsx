@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../styles/content.css';
 import '../styles/component.css';
 import CalendarWeek from './CalendarWeek';
+import AddTask from './AddTask';
 
 export default function Content() {
 
@@ -18,6 +19,7 @@ export default function Content() {
 
             const data = await response.json();
             setTaskItems(data);
+            console.log(data);
         } catch (error) {
             console.log("Tapahtui virhe 2: " + error);
         }
@@ -30,15 +32,14 @@ export default function Content() {
     return (
         <>
             <div id="mainContentAdd">
-                <input type="text" onChange={(e) => setName(e.target.value)} />
-                <button type="button" onClick={() => handleSubmit()}>Hae tehtävät</button>
+                <AddTask />
             </div>
             <div id="content">
                 {taskItems.map((item) =>
                     <p id="mainComponent" key={item.taskid}>{item.name}</p>)}
             </div>
             <div>
-                <CalendarWeek />
+                <CalendarWeek taskItems={taskItems}/>
             </div>
         </>
     );

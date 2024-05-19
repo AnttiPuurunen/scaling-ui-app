@@ -7,7 +7,7 @@
 
 #calendarWeek {
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     justify-content: space-evenly;
     background-color : #f1f1f1;
 }
@@ -18,7 +18,7 @@
     }
   }
 
-#calendarDay {;
+#calendarDay {
     flex-grow: 1;
     border: 1px solid black;
     padding: 10px;
@@ -26,3 +26,9 @@
     line-height: 100%;
     font-size: 2em;
   }
+
+#navigationButtons {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
+}

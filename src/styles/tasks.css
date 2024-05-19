@@ -1,0 +1,16 @@
+#tasksContainer {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    background-color : #f1f1f1;
+}
+
+#tasksContainer > div {
+    font-size: 1rem;
+}
+
+#addTask {
+    margin: 10px;
+    padding: 10px;
+}

@@ -24,3 +24,16 @@ export function GetWeekDays(props) {
 
     return week;
 };
+
+export function AddOrSubtractDays(date, days, operation) {
+    const newDate = new Date(date);
+
+    // Add or subtract days from the calendar week when pressing the navigation buttons
+    if (operation === "+") {
+        newDate.setDate(date.getDate() + days)
+    } else if (operation === "-") {
+        newDate.setDate(date.getDate() -days)
+    }
+
+    return newDate;
+} 
