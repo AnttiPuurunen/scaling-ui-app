@@ -29,10 +29,11 @@ export function AddOrSubtractDays(date, days, operation) {
     const newDate = new Date(date);
 
     // Add or subtract days from the calendar week when pressing the navigation buttons
+    // to show previous or next week
     if (operation === "+") {
         newDate.setDate(date.getDate() + days)
     } else if (operation === "-") {
-        newDate.setDate(date.getDate() -days)
+        newDate.setDate(date.getDate() - days)
     }
 
     return newDate;

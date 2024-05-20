@@ -8,38 +8,23 @@ export default function Content() {
 
     const [name, setName] = useState("")
     const [taskItems, setTaskItems] = useState([]);
+    const [refresh, setRefresh] = useState(false);
 
-    const fetchTaskData = async () => {
-        try {
-            const response = await fetch(process.env.REACT_APP_SCHEDULE_API_URL + "Task");
-
-            if (!response.ok) {
-                console.log("Tapahtui virhe: " + response.status);
-            }
-
-            const data = await response.json();
-            setTaskItems(data);
-            console.log(data);
-        } catch (error) {
-            console.log("Tapahtui virhe 2: " + error);
-        }
-    };
-
-    const handleSubmit = () => {
-        fetchTaskData();
+    const handleRefresh = () => {
+        setRefresh(!refresh);
     }
 
     return (
         <>
             <div id="mainContentAdd">
-                <AddTask />
+                <AddTask handleRefresh={handleRefresh}/>
             </div>
             <div id="content">
                 {taskItems.map((item) =>
                     <p id="mainComponent" key={item.taskid}>{item.name}</p>)}
             </div>
             <div>
-                <CalendarWeek taskItems={taskItems}/>
+                <CalendarWeek refresh={refresh} handleRefresh={handleRefresh} />
             </div>
         </>
     );

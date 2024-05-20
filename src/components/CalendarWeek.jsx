@@ -5,11 +5,10 @@ import { AddOrSubtractDays, GetWeekDays } from '../utils/GetWeekDays';
 
 export default function CalendarWeek(props) {
 
-    const { taskItems } = props || [];
+    const { refresh, handleRefresh } = props || [];
     const weekDays = ["Maanantai", "Tiistai", "Keskiviikko", "Torstai", "Perjantai", "Lauantai", "Sunnuntai"];
     const [thisWeek, setThisWeek] = useState([]);
-    const [selectedDay, setSelectedDay] = useState(null);
-    const [refresh, setRefresh] = useState(false);
+    const [selectedDay, setSelectedDay] = useState(null);   
 
     useEffect(() => {
         if (thisWeek.length === 0) getDaysOfTheWeek();
@@ -32,7 +31,7 @@ export default function CalendarWeek(props) {
                 [...thisWeek, { dayOfTheWeek: weekDays[i], dateOfTheDay: days[i] },]);
         }
         // Toggle refresh value to send child component the signal to re-fetch tasks when the week is changed
-        setRefresh(!refresh);
+        handleRefresh();
         console.log(thisWeek);
     }
 
@@ -76,7 +75,7 @@ export default function CalendarWeek(props) {
             </div>
             <div id="calendarWeek">
                 {thisWeek.map((item, index) =>
-                    <CalendarDay key={index} weekDay={item.dayOfTheWeek} dayDate={item.dateOfTheDay} refresh={refresh} taskItems={taskItems} />)}
+                    <CalendarDay key={index} weekDay={item.dayOfTheWeek} dayDate={item.dateOfTheDay} refresh={refresh} />)}
             </div>
         </>
     );

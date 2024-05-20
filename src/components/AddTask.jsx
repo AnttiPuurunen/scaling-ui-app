@@ -1,18 +1,17 @@
 import { React, useState, useEffect } from 'react';
 import '../styles/component.css';
 import '../styles/tasks.css';
-import TaskComponent from './TaskComponent';
-import Tasktypes from './TaskTypes';
-import { FromFinnishFormatToISO, FromFinnishFormatToTimestamp } from '../utils/ParseDates';
+import TaskTypes from './TaskTypes';
+import CalendarComponent from './CalendarComponent';
+import { FromFinnishFormatToISO } from '../utils/ParseDates';
 
 export default function AddTask(props) {
 
-    const { weekDay, dayDate } = props || [];
-    const [taskItems, setTaskItems] = useState([]);
-    const [newTask, setNewTask] = useState(null);
+    const { handleRefresh } = props || [];
     const [name, setName] = useState("");
     const [dueDate, setDueDate] = useState("");
     const [taskType, setTaskType] = useState(0);
+    const [showCalendar, setShowCalendar] = useState(false);
 
     const addNewTask = async () => {
         try {
@@ -23,7 +22,7 @@ export default function AddTask(props) {
                 },
                 body: JSON.stringify({
                     name: name,
-                    duedate: dueDate,
+                    duedate: FromFinnishFormatToISO(dueDate),
                     tasktypeid: taskType,
                     iscompleted: 0
                 }),
@@ -35,15 +34,14 @@ export default function AddTask(props) {
             }
 
             const data = await response.json();
-            
-            console.log(data);
+            handleRefresh();
         } catch (error) {
             console.log("Tapahtui virhe 2: " + error);
         }
     };
 
     const handleSubmitClick = () => {
-        if (name !== "" | taskType !== 0 | dueDate !== "") {
+        if (name !== "" & taskType !== 0 & dueDate !== "") {
             addNewTask();   
         }
     }
@@ -55,15 +53,12 @@ export default function AddTask(props) {
                     Nimi:
                     <input type="text" onChange={(e) => setName(e.target.value)} />
                 </label>
-                <label>
-                    Tyyppi:
-                    <input type="text" onChange={(e) => setTaskType(e.target.value)} />
-                </label>
-                <Tasktypes />
+                <TaskTypes taskType={taskType} setTaskType={setTaskType}/>
                 <label>
                     Tehtävä viimeistään:
-                    <input type="text" onChange={(e) => setDueDate(e.target.value)} />
+                    <input type="text" onClick={() => setShowCalendar(!showCalendar)} value={dueDate} />
                 </label>
+                {showCalendar ? <CalendarComponent setDueDate={setDueDate}/> : null}
                 <button type="button" onClick={() => handleSubmitClick()}>Lisää</button>
             </div>
         </>

@@ -1,14 +1,18 @@
-export default function DropdownMenu({ open, trigger, items }) {
+export default function DropdownMenu({ taskType, options, setTaskType }) {
+
+    const handleTypeSelect = (event) => {
+        console.log(event.target.value);
+        setTaskType(event.target.value);
+    }
+
     return (
-        <div className="dropdown">
-            {trigger}
-            {open ? (
-                <ul className="menu">
-                    {items.map((item) => (
-                        <li key={item.tasktypeid} className="menu-item">{item.name}</li>
-                    ))}
-                </ul>
-            ) : null}
-        </div>
+        <label>
+            Valitse tyyppi:
+            <select value={taskType} onChange={handleTypeSelect}>
+                {options.map((option, index) => (
+                    <option key={index} value={option.taskTypeId}>{option.name}</option>
+                ))}
+            </select>
+        </label>
     );
 };

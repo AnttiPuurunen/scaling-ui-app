@@ -1,19 +1,12 @@
 import { React, useState, useEffect } from 'react';
 import '../styles/component.css';
 import '../styles/tasktypes.css';
-import TaskComponent from './TaskComponent';
-import { FromFinnishFormatToISO, FromFinnishFormatToTimestamp } from '../utils/ParseDates';
 import DropdownMenu from './DropdownMenu';
 
-export default function Tasktypes(props) {
+export default function TaskTypes(props) {
 
-    const { weekDay, dayDate } = props || [];
+    const { taskType, setTaskType } = props || [];
     const [tasktypes, setTasktypes] = useState([]);
-    const [newTask, setNewTask] = useState(null);
-    const [name, setName] = useState("");
-    const [dueDate, setDueDate] = useState("");
-    const [taskType, setTaskType] = useState(0);
-    const [showDropdown, setShowdropDown] = useState(false);
 
     useEffect(() => {
         const fetchTasktypeData = async () => {
@@ -36,15 +29,13 @@ export default function Tasktypes(props) {
 
     }, []);
 
-    const handleDropdownClick = () => {
-        setShowdropDown(!showDropdown);
-    }
-
     return (
         <>
-            <DropdownMenu open={showDropdown}
-                trigger={<button onClick={handleDropdownClick}>Valitse tyyppi</button>}
-                items={tasktypes}
+            <DropdownMenu
+                label="Valitse tyyppi"
+                options={tasktypes}
+                value={taskType}
+                setTaskType={setTaskType}
             />
         </>
     );
