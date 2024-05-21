@@ -2,7 +2,7 @@ import { React, useState, useEffect } from 'react';
 import '../styles/component.css';
 import '../styles/tasks.css';
 import TaskComponent from './TaskComponent';
-import { FromFinnishFormatToISO, FromFinnishFormatToTimestamp } from '../utils/ParseDates';
+import { FromFinnishFormatToISO } from '../utils/ParseDates';
 
 export default function CalendarDay(props) {
 

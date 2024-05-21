@@ -1,10 +1,7 @@
 import { React, useEffect, useState } from 'react';
 import '../styles/calendar.css';
 
-export default function CalendarDays({ today, setDueDate, selectedDay, lastChosenView, setLastChosenView, changeSelectedDay }) {
-
-    const [datesToShow, setDatesToShow] = useState([]);
-    
+export default function CalendarDays({ datesToShow, setDatesToShow, setDueDate, selectedDay, lastChosenView, setLastChosenView, changeSelectedDay }) {
 
     useEffect(() => {
         // Show six full weeks of dates in the calendar
@@ -13,9 +10,9 @@ export default function CalendarDays({ today, setDueDate, selectedDay, lastChose
 
             if (lastChosenView !== null) {
                 firstDayOfTheMonth = new Date(lastChosenView.getFullYear(), lastChosenView.getMonth(), 1);
-            } 
+            }
             else {
-                firstDayOfTheMonth = new Date(selectedDay.getFullYear(), selectedDay.getMonth(), 1);    
+                firstDayOfTheMonth = new Date(selectedDay.getFullYear(), selectedDay.getMonth(), 1);
             }
 
             const weekdayOfTheFirstDay = firstDayOfTheMonth.getDay();
@@ -44,7 +41,7 @@ export default function CalendarDays({ today, setDueDate, selectedDay, lastChose
                 days.push(calendarDay);
             }
             // Save a date from the middle of the full month being shown, as it will always be the right month to use for navigating 
-            setLastChosenView(days[16].date);
+            setLastChosenView(days[21].date);
             setDatesToShow(days);
         }
 
@@ -61,7 +58,7 @@ export default function CalendarDays({ today, setDueDate, selectedDay, lastChose
     return (
         <div id="calendar-days">
             {datesToShow.map((day, index) => {
-                return <div id="individual-day" key={index} onClick={() => handleDateSelection(day)}><p>{day.number}</p></div>
+                return <div className={"individual-day" + (day.currentMonth ? " current" : "") + (day.selected ? " selected" : "")} key={index} onClick={() => handleDateSelection(day)}><p>{day.number}</p></div>
             })}
         </div>
     )

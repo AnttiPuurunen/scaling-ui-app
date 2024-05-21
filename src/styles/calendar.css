@@ -42,16 +42,34 @@
     box-sizing: border-box;
 }
 
-#individual-day {
+.individual-day {
     flex-grow: 1;
+    flex-shrink: 1;
     width: 85px;
-    height: 75px;
+    height: 50px;
     position: relative;
     border: 1px solid #a6a6a6;
 }
 
-#individual-day > p {
+.individual-day:hover {
+    background-color: rgba(0,0,0,.10);
+}
+  
+.individual-day > p {
     position: absolute;
     right: 10px;
     color: #a6a6a6;
   }
+
+.current p {
+   color: #000000;
+  }
+
+.selected {
+   background-color: rgba(0,0,0,.10);
+}
+
+.selected p {
+   color: #cc0000;
+   font-weight: bold;
+}

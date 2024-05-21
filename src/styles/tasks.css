@@ -7,6 +7,8 @@
 }
 
 #tasksContainer > div {
+    display: flex;
+    flex-wrap: inherit;
     font-size: 1rem;
 }
 
