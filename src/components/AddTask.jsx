@@ -56,10 +56,10 @@ export default function AddTask(props) {
                 <TaskTypes taskType={taskType} setTaskType={setTaskType}/>
                 <label>
                     Tehtävä viimeistään:
-                    <input type="text" onClick={() => setShowCalendar(!showCalendar)} value={dueDate} />
+                    <input type="text" onClick={() => setShowCalendar(!showCalendar)} defaultValue={dueDate} />
                 </label>
-                {showCalendar ? <CalendarComponent setDueDate={setDueDate}/> : null}
-                <button type="button" onClick={() => handleSubmitClick()}>Lisää</button>
+                {showCalendar ? <CalendarComponent dueDate={dueDate} showCalendar={showCalendar} setDueDate={setDueDate}/> : null}
+                <button type="button" disabled={!name | !dueDate | !taskType} onClick={() => handleSubmitClick()}>Lisää</button>
             </div>
         </>
     );

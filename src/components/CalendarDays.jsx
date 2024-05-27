@@ -1,7 +1,8 @@
 import { React, useEffect, useState } from 'react';
 import '../styles/calendar.css';
+import { FromFinnishFormatToTimestamp } from '../utils/ParseDates';
 
-export default function CalendarDays({ datesToShow, setDatesToShow, setDueDate, selectedDay, lastChosenView, setLastChosenView, changeSelectedDay }) {
+export default function CalendarDays({ datesToShow, setDatesToShow, highlightedMonth, setHighlightedMonth, setDueDate, selectedDay, lastChosenView, setLastChosenView, changeSelectedDay }) {
 
     useEffect(() => {
         // Show six full weeks of dates in the calendar
@@ -14,24 +15,27 @@ export default function CalendarDays({ datesToShow, setDatesToShow, setDueDate, 
             else {
                 firstDayOfTheMonth = new Date(selectedDay.getFullYear(), selectedDay.getMonth(), 1);
             }
-
+            // Zero-indexed
             const weekdayOfTheFirstDay = firstDayOfTheMonth.getDay();
             let days = [];
             setDatesToShow([]);
             for (let day = 0; day < 42; day++) {
-                // Fill the calendar starting from a Monday
+                // Fill the calendar always starting from a Monday
                 if (day === 0 && weekdayOfTheFirstDay === 1) {
                     // If the first day of the month is a Monday, go back a week to get last month's last week
                     firstDayOfTheMonth.setDate(firstDayOfTheMonth.getDate() - 7);
+                } else if (day === 0 && weekdayOfTheFirstDay === 0) {
+                    // If it's a Sunday, go back to that week's Monday
+                    firstDayOfTheMonth.setDate(firstDayOfTheMonth.getDate() - 6);
                 } else if (day === 0) {
-                    // If it's not a Monday, find the last Monday before the first day of the month
+                    // If it's any other day, go back to that week's Monday
                     firstDayOfTheMonth.setDate(firstDayOfTheMonth.getDate() + (day - weekdayOfTheFirstDay + 1));
                 } else {
                     firstDayOfTheMonth.setDate(firstDayOfTheMonth.getDate() + 1);
                 }
 
                 let calendarDay = {
-                    currentMonth: (firstDayOfTheMonth.getMonth() === selectedDay.getMonth()),
+                    currentMonth: (firstDayOfTheMonth.getMonth() === highlightedMonth.getMonth()),
                     date: (new Date(firstDayOfTheMonth)),
                     month: firstDayOfTheMonth.getMonth(),
                     number: firstDayOfTheMonth.getDate(),
@@ -42,6 +46,7 @@ export default function CalendarDays({ datesToShow, setDatesToShow, setDueDate, 
             }
             // Save a date from the middle of the full month being shown, as it will always be the right month to use for navigating 
             setLastChosenView(days[21].date);
+            setHighlightedMonth(days[21].date)
             setDatesToShow(days);
         }
 
@@ -53,6 +58,7 @@ export default function CalendarDays({ datesToShow, setDatesToShow, setDueDate, 
         // Show the selected day in Finnish format without the time
         setDueDate(date.toLocaleDateString("fi-FI").slice(0, 10));
         changeSelectedDay(date);
+        setHighlightedMonth(date);
     }
 
     return (
